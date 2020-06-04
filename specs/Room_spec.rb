@@ -2,139 +2,109 @@ require("minitest/autorun")
 require('minitest/reporters')
 Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 
+
 require_relative("../Guest.rb")
 require_relative("../Room.rb")
 require_relative("../Song.rb")
-require_relative("../Collection.rb")
 
 class RoomTest < MiniTest::Test
 
-  def setup()
+  def setup
 
-    @song01 = Song.new("Intergalactic", "Beastie Boys", "Hip Hop")
-    @song02 = Song.new("Uptown Funk", "Bruno Mars", "Hip Hop")
-    @song03 = Song.new("Hey Ya!", "Outkast", "Hip Hop")
-    @song04 = Song.new("Lose Yourself", "Eminem", "Hip Hop")
-    @song05 = Song.new("Rapper's Delight", "The Sugar Hill Gang", "Hip Hop")
-    @song06 = Song.new("Angels", "Robbie Williams", "Pop")
-    @song07 = Song.new("I Wanna Dance With Somebody", "Whitney Houston", "Pop")
-    @song08 = Song.new("Wannabe", "Spice Girls", "Pop")
-    @song09 = Song.new("Uptown Girl", "Billy Joel", "Pop")
-    @song10 = Song.new("Common People", "Blur", "Pop")
-    @song11 = Song.new("Bohemian Rhapsody", "Queen", "Rock")
-    @song12 = Song.new("Don't Stop Believin'", "Journey", "Rock")
-    @song13 = Song.new("Born to Run", "Bruce Springsteen", "Rock")
-    @song14 = Song.new("Welcome To The Jungle", "Guns N' Roses", "Rock")
-    @song15 = Song.new("Mr Brightside", "The Killers", "Rock")
-    @song16 = Song.new("Working 9 to 5", "Dolly Parton", "Country")
-    @song17 = Song.new("Ring of Fire", "Johnny Cash", "Country")
-    @song18 = Song.new("Sweet Home Alabama", "Lynyrd Skynyrd", "Country")
-    @song19 = Song.new("Take Me Home, Country Roads", "John Denver", "Country")
-    @song20 = Song.new("Rhinestone Cowboy", "Glen Campbell", "Country")
-    @song21 = Song.new("Summer Nights", "Grease", "Classics")
-    @song22 = Song.new("Dancing Queen", "Abba", "Classics")
-    @song23 = Song.new("Star Trekkin", "The Firm", "Classics")
-    @song24 = Song.new("I Will Survive", "Gloria Gaynor", "Classics")
-    @song25 = Song.new("YMCA", "The Village People", "Classics")
-    @song26 = Song.new("A Whole New World", "Aladdin", "Oh My Disney")
-    @song27 = Song.new("Under the Sea", "The Little Mermaid", "Oh My Disney")
-    @song28 = Song.new("Let It Go", "Frozen", "Oh My Disney")
-    @song29 = Song.new("Can You Feel The Love Tonight", "Elton John", "Oh My Disney")
-    @song30 = Song.new("Reflection", "Mulan", "Oh My Disney")
+    @song1 = Song.new("Intergalactic", "Beastie Boys")
+    @song2 = Song.new("Common People", "Blur")
+    @song3 = Song.new("Mr Brightside", "The Killers")
+    @song4 = Song.new("Working 9 to 5", "Dolly Parton")
+    @song5 = Song.new("Star Trekkin", "The Firm")
+    @song6 = Song.new("YMCA", "The Village People")
+    @song7 = Song.new("A Whole New World", "Aladdin")
 
-    @collection01 = Collection.new()
-    @collection02 = Collection.new()
-    @collection03 = Collection.new()
-    @collection04 = Collection.new()
-    @collection05 = Collection.new()
-    @collection06 = Collection.new()
 
-    @collection01.add_song(@song01)
-    @collection01.add_song(@song02)
-    @collection01.add_song(@song03)
-    @collection01.add_song(@song04)
-    @collection01.add_song(@song05)
+    @collection1 = [@song1, @song2, @song3, @song4]
+    @collection2 = [@song5, @song6, @song7]
 
-    @collection02.add_song(@song06)
-    @collection02.add_song(@song07)
-    @collection02.add_song(@song08)
-    @collection02.add_song(@song09)
-    @collection02.add_song(@song10)
+    @room01 = Room.new("Banging Tunes", 3, @collection1, 5.00)
+    @room02 = Room.new("Classics", 4, @collection2, 6.75)
 
-    @collection03.add_song(@song11)
-    @collection03.add_song(@song12)
-    @collection03.add_song(@song13)
-    @collection03.add_song(@song14)
-    @collection03.add_song(@song15)
+    @guest01 = Guest.new("Kirk", 10.00, @song1)
+    @guest02 = Guest.new("Spock", 15.00, @song2)
+    @guest03 = Guest.new("Bones", 100.00, @song3)
+    @guest04 = Guest.new("Scotty", 40.00, @song4)
+    @guest05 = Guest.new("Uhura", 25.00, @song5)
+    @guest06 = Guest.new("Checkov", 150.00, @song6)
+    @guest07 = Guest.new("Sulu", 35.00, @song7)
 
-    @collection04.add_song(@song16)
-    @collection04.add_song(@song17)
-    @collection04.add_song(@song18)
-    @collection04.add_song(@song19)
-    @collection04.add_song(@song20)
+    @guests01 = [@guest01, @guest02, @guest03]
+    @guests02 = [@guest04, @guest05, @guest06, @guest07]
 
-    @collection05.add_song(@song21)
-    @collection05.add_song(@song22)
-    @collection05.add_song(@song23)
-    @collection05.add_song(@song24)
-    @collection05.add_song(@song25)
-
-    @collection06.add_song(@song26)
-    @collection06.add_song(@song27)
-    @collection06.add_song(@song28)
-    @collection06.add_song(@song29)
-    @collection06.add_song(@song30)
-
-    @room01 = Room.new("Hip Hop", 6, 7.50, @collection01)
-    @room02 = Room.new("Pop", 10, 8.75, @collection02)
-    @room03 = Room.new("Rock", 8, 8.00, @collection03)
-    @room04 = Room.new("Country", 4, 6.50, @collection04)
-    @room05 = Room.new("Classics", 10, 8.75, @collection05)
-    @room06 = Room.new("Oh My Disney", 5, 7.00, @collection06)
-
-    @guest01 = Guest.new("Kirk", 10.00, 34, @song10)
-    @guest02 = Guest.new("Spock", 15.00, 35, @song01)
-    @guest03 = Guest.new("Bones", 100.00, 40, @song15)
-    @guest04 = Guest.new("Scotty", 40.00, 44, @song16)
-    @guest05 = Guest.new("Uhura", 25.00, 34, @song23)
-    @guest06 = Guest.new("Checkov", 150.00, 17, @song26)
-    @guest07 = Guest.new("Sulu", 35.00, 29, @song25)
-
-    @away_team01 = [@guest01, @guest02, @guest03]
-    @away_team02 = [@guest04, @guest05, @guest06, @guest07]
   end
   # => 1
   def test_can_create_room()
-    assert_equal(Room, @room03.class)
+    assert_equal(Room, @room01.class)
   end
   # => 2
-  def test_initial_room_properties
-    assert_equal("Hip Hop", @room01.room_genre)
-    assert_equal(6, @room01.capacity)
-    assert_equal(7.50, @room01.entry_fee)
-    assert_equal([], @room01.guests)
-    assert_equal(5, @room01.songs.length)
+  def test_room_has_name
+    assert_equal("Banging Tunes", @room01.name)
   end
-# => 3
-  def test_check_in_guests
-    @room02.check_in(@away_team01)
-    assert_equal(3, @room02.guests.length)
-    assert_equal(26.25, @room02.kitty)
-    assert_equal(7, @room02.capacity)
+  # => 3
+  def test_room_has_songs
+      assert_equal(3, @room02.number_of_songs)
   end
-# => 4
-  def test_room_at_capacity
-    @room06.check_in(@away_team01)
-    @room06.check_in(@away_team02)
-    assert_equal(3, @room06.guests.length)
+
+  def test_can_check_in_guests
+    @room01.check_in_guests(@guests01)
+    assert_equal(3, @room01.guests.count)
   end
-# => 5
-  def test_check_out_guests
-    @room05.check_in(@away_team02)
-    @room05.check_in(@away_team01)
-    @room05 .check_out(@away_team01)
-    assert_equal(4, @room05.guests.length)
-    assert_equal(35.00, @room05.kitty)
-    assert_equal(6, @room05. capacity)
+
+  def test_can_check_in_guests__room_already_has_guests
+    group1 = [@guest01, @guest02]
+    group2 = [@guest04]
+    @room01.check_in_guests(group1)
+    @room01.check_in_guests(group2)
+    assert_equal(3, @room01.number_of_guests())
+  end
+
+  def test_can_check_in_guests__one_guest_cannot_afford
+    guests = [@guest01, @guest02, @guest03]
+    @room01.check_in_guests(guests)
+    assert_equal(3, @room01.number_of_guests())
+  end
+
+  def test_cannot_be_overbooked
+    @room01.check_in_guests(@guests01)
+    @room01.check_in_guests([@guest04])
+    assert_equal(3, @room01.number_of_guests())
+  end
+
+  def test_guests_can_check_out
+    @room01.check_in_guests(@guests01)
+    @room01.check_out_guests
+    assert_equal(0, @room01.guests.count)
+  end
+
+  def test_recognises_fav_song
+    @room01.check_in_guests(@guests01)
+    songs = @room01.songs
+    assert_equal("This song is out of this world!!", @guests01[1].play_fav_song(songs))
+  end
+
+  def test_fee_was_paid_at_check_in
+    @room01.check_in_guests(@guests02)
+    assert_equal(0, @room01.till)
+    assert_equal(40.00, @guests02[0].wallet)
+    assert_equal(25.00, @guests02[1].wallet)
+    assert_equal(150.00, @guests02[2].wallet)
+    assert_equal(35.00, @guests02[3].wallet)
+
+  end
+
+  def test_can_add_one_song
+    @room01.add_song(@song06)
+    assert_equal(5, @room01.number_of_songs)
+  end
+
+  def test_can_add_multiple_songs
+    @room01.add_multiple_songs(@collection2)
+    assert_equal(7, @room01.number_of_songs)
   end
 end

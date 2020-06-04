@@ -2,20 +2,24 @@ require("minitest/autorun")
 require('minitest/reporters')
 Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 
-require_relative("../Guest.rb")
-require_relative("../Room.rb")
 require_relative("../Song.rb")
 
 class SongTest < MiniTest::Test
 
   def setup
-    @song01 = Song.new("Intergalactic", "Beastie Boys", "Hip Hop")
+    @song = Song.new("Intergalactic", "Beastie Boys")
     end
 
-  def test_define_song
-    assert_equal("Intergalactic", @song01.title)
-    assert_equal("Beastie Boys", @song01.artist)
-    assert_equal("Hip Hop", @song01.genre)
+  def test_define_song_title
+    assert_equal("Intergalactic", @song.title)
+  end
+
+  def test_define_song_artist
+    assert_equal("Beastie Boys", @song.artist)
+  end
+
+  def test_define_song_genre
+    assert_equal("Hip Hop", @song.genre)
   end
 end
 
